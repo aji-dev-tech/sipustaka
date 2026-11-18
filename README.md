@@ -1,66 +1,112 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# SIPUSTAKA
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**Sistem Informasi Perpustakaan SMK Negeri 5 Surakarta**
+Website peminjaman buku perpustakaan secara online, dibangun dengan Laravel 12.
 
-## About Laravel
+## Identitas
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+| | |
+|---|---|
+| Nama | Ajimas Aptanegara |
+| Kelas | XII RPL A |
+| Sekolah | SMK Negeri 5 Surakarta |
+| Mata pelajaran | KK-RPL (Pemrograman Teks, Grafik, dan Multimedia) |
+| Jenis tugas | Project Akhir |
+| Nama project | SIPUSTAKA |
+| Website | https://sipustaka.tefarpl.my.id |
+| Repository | https://github.com/aji-dev-tech/sipustaka |
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Deskripsi
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Pencatatan peminjaman buku secara manual memakan waktu dan mudah salah catat. SIPUSTAKA memudahkan siswa mencari dan meminjam buku secara online, serta membantu admin memverifikasi pengajuan, mencatat pengembalian dan denda, dan mencetak laporan.
 
-## Learning Laravel
+## Fitur
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+**Siswa**
+- Login dan dashboard ringkasan (sedang dipinjam, menunggu verifikasi, denda)
+- Katalog buku dengan cover dan pencarian
+- Keranjang: mengajukan beberapa buku sekaligus (maksimal 10 buku)
+- Lama peminjaman maksimal 7 hari
+- Riwayat peminjaman, status, dan denda
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+**Admin**
+- Dashboard statistik dan aktivitas peminjaman terbaru
+- Master Buku (tambah, edit, hapus, upload cover JPG/PNG maks 2 MB)
+- Master Kategori dan Data Anggota
+- Verifikasi pengajuan (setujui atau tolak) dengan pengecekan stok
+- Pengembalian buku: kondisi buku, denda terlambat otomatis, denda rusak, dan denda custom
+- Pengaturan tarif denda per hari
+- Laporan
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Teknologi
 
-## Laravel Sponsors
+- PHP 8.2+, Laravel 12
+- Blade, AdminLTE 4 (Bootstrap 5)
+- MySQL (XAMPP untuk pengembangan lokal)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Aturan Peminjaman
 
-### Premium Partners
+| Aturan | Nilai |
+|---|---|
+| Lama pinjam maksimal | 7 hari |
+| Buku per pengajuan | maksimal 10 |
+| Denda terlambat | hari telat x tarif per hari (default Rp 1.000, diatur admin) |
+| Cover buku | JPG, JPEG, PNG, maksimal 2 MB |
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+Aturan ini diatur di `config/sipustaka.php` dan dicek di sisi server.
 
-## Contributing
+## Cara Instalasi (lokal)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+1. Clone repository
+   ```
+   git clone https://github.com/aji-dev-tech/sipustaka.git
+   cd sipustaka
+   ```
+2. Install dependensi
+   ```
+   composer install
+   ```
+3. Salin file environment lalu buat app key
+   ```
+   cp .env.example .env
+   php artisan key:generate
+   ```
+4. Buat database MySQL, lalu isi `DB_DATABASE`, `DB_USERNAME`, dan `DB_PASSWORD` di `.env`
+5. Jalankan migrasi dan seeder
+   ```
+   php artisan migrate --seed
+   ```
+6. Hubungkan folder penyimpanan agar cover buku tampil
+   ```
+   php artisan storage:link
+   ```
+7. Jalankan aplikasi
+   ```
+   php artisan serve
+   ```
+   Buka http://127.0.0.1:8000
 
-## Code of Conduct
+## Akun Demo (dari seeder)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+| Peran | Email | Password |
+|---|---|---|
+| Admin | admin@sipustaka.test | password |
+| Siswa | ajimas@sipustaka.test | password |
 
-## Security Vulnerabilities
+Ganti password default sebelum dipakai sungguhan.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Struktur Singkat
 
-## License
+```
+app/Http/Controllers/Admin   Controller admin (buku, kategori, anggota, verifikasi, laporan, pengaturan)
+app/Http/Controllers/Siswa   Controller siswa (dashboard, katalog, keranjang, peminjaman)
+app/Http/Controllers/Auth    Login dan logout
+config/sipustaka.php         Aturan peminjaman
+database/migrations          Struktur tabel
+resources/views              Tampilan Blade
+routes/web.php               Daftar route
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Lisensi
+
+Dibuat untuk keperluan tugas sekolah.
